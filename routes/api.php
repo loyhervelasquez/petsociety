@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('/organization/login', 'OrganizationController@login')->name('login');
+
+Route::resource('organization', 'OrganizationController');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
