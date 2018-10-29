@@ -17,6 +17,8 @@ Route::post('/organization/login', 'OrganizationController@login')->name('login'
 
 Route::resource('organization', 'OrganizationController');
 
+Route::resource('owner', 'OwnerController');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
