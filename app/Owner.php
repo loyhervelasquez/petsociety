@@ -14,4 +14,12 @@ class Owner extends Model
     protected $fillable = [
     	'cedula', 'nombre', 'direccion'
 	];
+
+	/**
+     * Get animals by the owner.
+     */
+    public function animals()
+    {
+        return $this->hasMany('App\Animal');
+    }
 }

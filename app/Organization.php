@@ -23,4 +23,12 @@ class Organization extends Model
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Get animals registered by the organization.
+     */
+    public function animals()
+    {
+        return $this->hasMany('App\Animal');
+    }
 }

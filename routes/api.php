@@ -19,6 +19,8 @@ Route::resource('organization', 'OrganizationController');
 
 Route::resource('owner', 'OwnerController');
 
+Route::resource('animal', 'AnimalController');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
