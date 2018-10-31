@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return 'Main';
+    return view('api_doc');
 });
