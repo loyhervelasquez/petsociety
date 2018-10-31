@@ -16,7 +16,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        return "index";
+        return $this->sendResponse(Organization::all()->toArray());
     }
 
     /**
@@ -40,7 +40,7 @@ class OrganizationController extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Error de Validación.', $validator->errors());
+            return $this->sendError('Error de Validación.', $validator->errors(), 400);
         }
 
         $input["password"]  = Hash::make($input["password"]);
@@ -82,7 +82,8 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
-        //
+        $organization->delete();
+        return $this->sendResponse([], 'Organización Eliminada exitosamente.');
     }
 
     public function login(Request $request)
@@ -96,10 +97,11 @@ class OrganizationController extends Controller
 
         if ($organization && Hash::check($input['password'], $organization->password)){
             return $this->sendResponse([
-                "api_token" => $organization->api_token
+                "nombre"    => $organization->nombre,
+                "api_token" => $organization->api_token,
             ]);
         }
 
-        return $this->sendError('Error de Login.', ['error' => "credenciales incorrectas"], 403);       
+        return $this->sendError('Error de Login.', ['error' => "credenciales incorrectas"], 400);       
     }
 }

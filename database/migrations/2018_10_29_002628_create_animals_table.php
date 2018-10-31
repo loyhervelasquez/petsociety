@@ -19,9 +19,9 @@ class CreateAnimalsTable extends Migration
             $table->string('nombre');
             $table->integer('anio_nacimiento')->unsigned();
             $table->string('estatus');
-            $table->string('procedencia');
-            $table->string('descripcion');
-            $table->string('vacunas');
+            $table->string('procedencia')->nullable();
+            $table->string('descripcion')->nullable();
+            $table->string('vacunas')->nullable();
             $table->integer('owner_id')->unsigned();
             $table->integer('organization_id')->unsigned();
             $table->timestamps();

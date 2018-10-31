@@ -21,7 +21,7 @@ Route::group(['middleware' => ['acceso', 'bindings']], function (){
 
 Route::post('/organization/login', 'OrganizationController@login')->name('organization.login');
 
-Route::resource('organization', 'OrganizationController', ['only' => ['store']]);
+Route::resource('organization', 'OrganizationController', ['only' => ['store', 'index']]);
 
 Route::resource('owner', 'OwnerController', ['only' => ['show', 'index']]);
 

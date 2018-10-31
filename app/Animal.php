@@ -28,6 +28,6 @@ class Animal extends Model
      */
     public function owner()
     {
-        return $this->belongsTo('App\Organization');
+        return $this->belongsTo('App\Owner');
     }
 }

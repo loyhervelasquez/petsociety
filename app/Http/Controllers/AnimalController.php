@@ -17,8 +17,7 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        $animals = Animal::all();
-        return $this->sendResponse($animals->toArray());
+        return $this->sendResponse(Animal::with('owner')->with("organization")->get()->toArray());
     }
 
     /**
@@ -29,7 +28,7 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-         $input = $request->all();
+        $input = $request->all();
 
         $validator = Validator::make($input, [
             'tipo'            => ['required', 'string', 'max:255', ] ,
@@ -40,17 +39,19 @@ class AnimalController extends Controller
             'descripcion'     => ['required', 'string', 'max:255', ] ,
             'vacunas'         => ['required', 'string', 'max:255', ] ,
             'cedula'          => ['required', 'exists:owners,cedula'],
+            'api_token'       => ['required', 'exists:organizations,api_token'],
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Error de Validación.', $validator->errors());
+            return $this->sendError('Error de Validación.', $validator->errors(), 400);
         }
 
         $owner = Owner::where('cedula', $input['cedula'])->first();
-        $organization = Organization::where('id', 1)->first();
+        $organization = Organization::where('api_token', $input['api_token'])->first();
 
         $input['owner_id'] = $owner->id;
         $input['organization_id'] = $organization->id;
+        $input["tipo"] = strtoupper($input["tipo"]);
 
         $animal = Animal::create($input);
 
@@ -82,7 +83,39 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'tipo'            => ['required', 'string', 'max:255', ] ,
+            'nombre'          => ['required', 'string', 'max:255', ] ,
+            'anio_nacimiento' => ['required', 'digits:4'],
+            'estatus'         => ['required', 'string', 'max:255', ] ,
+            'procedencia'     => ['required', 'string', 'max:255', ] ,
+            'descripcion'     => ['required', 'string', 'max:255', ] ,
+            'vacunas'         => ['required', 'string', 'max:255', ] ,
+            'cedula'          => ['required', 'exists:owners,cedula'],
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Error de Validación.', $validator->errors(), 400);
+        }
+
+        $owner = Owner::where('cedula', $input['cedula'])->first();
+
+        $animal->tipo            = strtoupper($input["tipo"]);
+        $animal->nombre          = $input["nombre"];
+        $animal->anio_nacimiento = $input["anio_nacimiento"];
+        $animal->estatus         = $input["estatus"];
+        $animal->procedencia     = $input["procedencia"];
+        $animal->descripcion     = $input["descripcion"];
+        $animal->vacunas         = $input["vacunas"];
+        $animal->owner_id        = $owner->id;
+
+        $animal->save();
+
+        $animal = Animal::with("owner")->where('id', $animal->id)->first();
+
+        return $this->sendResponse($animal->toArray(), 'Animal editado exitosamente.');
     }
 
     /**
@@ -93,6 +126,7 @@ class AnimalController extends Controller
      */
     public function destroy(Animal $animal)
     {
-        //
+        $animal->delete();
+        return $this->sendResponse([], 'Animal Eliminado exitosamente.');
     }
 }

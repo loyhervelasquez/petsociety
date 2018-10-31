@@ -15,7 +15,7 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        //
+        return $this->sendResponse(Owner::all()->toArray());
     }
 
     /**
@@ -35,7 +35,7 @@ class OwnerController extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Error de Validación.', $validator->errors());
+            return $this->sendError('Error de Validación.', $validator->errors(), 400);
         }
 
         $owner = Owner::create($input);
@@ -68,7 +68,25 @@ class OwnerController extends Controller
      */
     public function update(Request $request, Owner $owner)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'cedula'      => ['required', 'numeric', 'unique:owners,cedula,'.$owner->id.','.'id'],
+            'nombre'      => ['required', 'string', 'max:255'],
+            'direccion'   => ['required', 'string'],
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Error de Validación.', $validator->errors(), 400);
+        }
+
+        $owner->cedula = $input["cedula"];
+        $owner->nombre = $input["nombre"];
+        $owner->direccion = $input["direccion"];
+        $owner->save();
+
+        return $this->sendResponse($owner->toArray(), 'Dueño editado exitosamente.');
+
     }
 
     /**
@@ -79,6 +97,7 @@ class OwnerController extends Controller
      */
     public function destroy(Owner $owner)
     {
-        //
+        $owner->delete();
+        return $this->sendResponse([], 'Dueño Eliminado exitosamente.');
     }
 }
