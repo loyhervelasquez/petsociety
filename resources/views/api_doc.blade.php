@@ -20,6 +20,23 @@
 					</thead>
 					<tbody>
 						<tr>
+							<td>POST</td>
+							<td>http://petsociety.herokuapp.com/api/organization/login</td>
+							<td>
+<pre><code class="json">{
+ username    : string,
+ password    : string
+}</code></pre>
+							</td>
+							<td>Se autentica la organización con los parámetros enviados</td>
+							<td>
+<pre><code class="json">{
+ nombre      : string,
+ api_token   : string,
+}</code></pre>
+							</td>
+						</tr>
+						<tr>
 							<td>GET</td>
 							<td>http://petsociety.herokuapp.com/api/organization/{id}</td>
 							<td>
@@ -47,11 +64,13 @@
 							<td>http://petsociety.herokuapp.com/api/organization</td>
 							<td>
 <pre><code class="json">{
- rif         : int,
- nombre      : string,
- direccion   : string,
- descripcion : string,
- email       : string,
+ rif                   : int,
+ nombre                : string,
+ direccion             : string,
+ descripcion           : string,
+ email                 : string,
+ password              : string,
+ password_confirmation : string
 }</code></pre>
 							</td>
 							<td>Almacena una organización con los parámetros enviados</td>
