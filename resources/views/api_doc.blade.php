@@ -104,34 +104,6 @@
 							</td>
 						</tr>
 						<tr>
-							<td>PUT</td>
-							<td>http://petsociety.herokuapp.com/api/organization/{id}</td>
-							<td>
-<pre><code class="json">{
- rif         : int,
- nombre      : string,
- direccion   : string,
- descripcion : string,
- email       : string,
- api_token   : string
-}</code></pre>
-							</td>
-							<td>Modifica la organización con los parámetros enviados</td>
-							<td>
-<pre><code class="json">{
- id          : int,
- rif         : int,
- nombre      : string,
- direccion   : string,
- descripcion : string,
- email       : string,
- api_token   : string,
- created_at  : string,
- updated_at  : string
-}</code></pre>
-							</td>
-						</tr>
-						<tr>
 							<td>GET</td>
 							<td>http://petsociety.herokuapp.com/api/organization</td>
 							<td>
