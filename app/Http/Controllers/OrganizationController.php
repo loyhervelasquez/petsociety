@@ -57,9 +57,13 @@ class OrganizationController extends Controller
      * @param  \App\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function show(Organization $organization)
+    public function show($id)
     {
-        //
+        $organization = Organization::where('id', $id)->first();
+        
+        if($organization)
+            return $this->sendResponse($organization->toArray());
+        return $this->sendError('Organizacion no Encontrada');
     }
 
     /**
