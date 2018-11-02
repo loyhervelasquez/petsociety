@@ -116,11 +116,11 @@
 						</tr>
 						<tr>
 							<td>GET</td>
-							<td>http://petsociety.herokuapp.com/api/owner/{id}</td>
+							<td>http://petsociety.herokuapp.com/api/owner/{cedula}</td>
 							<td>
 								<pre><code class="json">{}</code></pre>
 							</td>
-							<td>Obtiene el dueño con el id de la URL</td>
+							<td>Obtiene el dueño con la cédula de la URL</td>
 							<td>
 <pre><code class="json">{
  id         : int,
